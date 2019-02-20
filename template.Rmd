@@ -1,0 +1,185 @@
+---
+title: "Título"
+author: Sergio Uribe
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+
+output: 
+  html_notebook: 
+    toc: yes
+    toc_float: true
+    fig_caption: true
+---
+
+# Shortcuts
+Cmd/Ctrl + Shift + C for (un)commenting
+
+Cmd/Ctrl + Shift + M for adding `%>%`
+Cmd/Ctrl + I for auto-indentation
+
+Alt + Up or Down to move current line(s) without copying and pasting
+
+Cmd + Option + Up or Down / Shift + Alt + Up or Down to insert a copy of current line(s) 
+
+F7 for spell check
+Ctrl + Shift + 1-4  expands the different panes into full view in RStudio :)
+
+# Load packages
+if (!require("gapminder")) install.packages("gapminder") #instala paquetes en caso que no estén instalados
+
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+
+
+# fake data https://github.com/ropensci/charlatan
+
+# turn off scientific notation
+ options(scipen = 999) 
+
+# Paquetes
+```{r, include = F, echo = F}
+Packages <- c("tidyverse", "forcats", "stringr", "broom")
+lapply(Packages, library, character.only = TRUE)
+rm(Packages)
+```
+
+#EDA
+
+
+---------------------------------------------
+## EDA by https://blog.datascienceheroes.com/exploratory-data-analysis-in-r-intro/
+library(funModeling) 
+library(tidyverse) 
+library(Hmisc)
+
+basic_eda <- function(data)
+{
+  glimpse(data)
+  df_status(data)
+  freq(data) 
+  profiling_num(data)
+  plot_num(data)
+  describe(data)
+}
+
+basic_eda(my_amazing_data)
+---------------------------------------------
+
+
+# Remueve columnas con cierto nivel de NA
+x <- df[ lapply( df, function(x) sum(is.na(x)) / length(x) ) < 0.4 ]
+
+
+https://blog.datascienceheroes.com/exploratory-data-analysis-data-preparation-with-funmodeling/
+funModeling # data preparation, profiling, selecting best variables 'dataViz', 
+
+install.packages("visdat")
+
+https://infer.netlify.com/
+
+ggally http://ggobi.github.io/ggally/#ggally
+
+devtools::install_github("ThinkR-open/remedy") #provides addins to facilitate writing in markdown with RStudio.
+library(remedy)
+
+install.packages("citr") # citas
+
+Otros paquetes
+
+ggthemeassist # provides a GUI for editing ggplot2 themes
+ggplotAssist #addin for teaching and learning making plot using the 'ggplot2' 
+dplyrAssist #addin for teaching and learning data manipulation using the 'dplyr' package
+assessing model performance and other functions. (ver en http://bit.ly/2DAiGmJ ) 
+gghighlight: Highlight ggplot's Lines and Points with Predicates
+
+epitool #Tools for training and practicing epidemiologists including methods for two-way and multi-way contingency tables.
+pubh #PublicHealth (ver https://cran.rstudio.com/web/packages/pubh/vignettes/introduction.html) 
+
+Otros
+
+## Modelling 
+
+
+https://github.com/vincentarelbundock/gtsummary Varios modelos en una tabla
+
+
+https://github.com/WinVector/vtreat
+vtreat is an R data.frame processor/conditioner that prepares real-world data for predictive modeling in a statistically sound manne
+
+FINALFIT http://www.datasurg.net/2018/05/16/elegant-regression-results-tables-and-plots-the-finalfit-package/ 
+
+### Check interations
+https://interactions.jacob-long.com/index.html
+
+wordcountaddin # cuenta palabras no code
+
+install.packages("datapasta") #copiar y pegar tablas, ver https://github.com/MilesMcBain/datapasta
+
+
+# install.packages("devtools") devtools::install_github("sicarul/xray") 
+
+
+ver https://livebook.datascienceheroes.com/
+
+Plots
+```{r, include = F, echo = F}
+install.packages("devtools")
+
+devtools::install_github("gertstulp/ggplotgui")
+devtools::install_github("LudvigOlsen/splitChunk") #splitchunks
+devtools::install_github("ropenscilabs/skimr") # summary stats
+
+library("ggplotgui")
+```
+
+#Recrear datos
+library(splitstackshape)
+expandRows(data.frame(as.table(originalTable)), "Freq")
+
+
+### Lineas de significancia para los gráficos
+
+install.packages("ggsignif")
+library(ggsignif)
+
+
+# Dataset
+
+## Data cleaning
+```{r janitor}
+library(janitor)
+
+df_clean - df_dirty %>% 
+        clean_names() %>%
+        remove_empty_rows() %>% 
+        remove_empty_cols() 
+```
+
+### Search & replace
+df <- dplyr::mutate_if(tibble::as_tibble(df), 
+                                is.character, 
+                                stringr::str_replace_all, 
+                       pattern = "oldVar",replacement = "newVar")
+
+## Dataset clean
+
+vis_dat(df)
+
+# Exploratory Data Analysis
+
+# Inferential Analysis
+
+# Citas
+
+```{r}
+citation()
+citation(package = "tidyverse")
+citation(package = "stringr")
+citation(package = "broom")
+citation(package = "editData")
+```
